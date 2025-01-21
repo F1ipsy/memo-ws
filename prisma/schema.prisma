@@ -14,9 +14,10 @@ datasource db {
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  title String @unique @db.VarChar(100)
-  cards Card[]
+  id          Int     @id @default(autoincrement())
+  title       String  @unique @db.VarChar(100)
+  instruction String?
+  cards       Card[]
 
   @@map("categories")
 }

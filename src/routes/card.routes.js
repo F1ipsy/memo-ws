@@ -68,7 +68,7 @@ export default async function cardRoutes(fastify) {
 				});
 			}
 
-			if (body.setting == "alternate" && !body.alternateImage) {
+			if (body.setting === "alternate" && !body.alternateImage) {
 				return reply.status(400).send({
 					succes: false,
 					message: "Выберите альтернативное изображение для карточки",
@@ -77,10 +77,10 @@ export default async function cardRoutes(fastify) {
 
 			await prisma.card.create({
 				data: {
-					image: `${process.env.APP_URL}/storage/${body.image}`,
+					image: body.image,
 					alternateImage:
 						body.alternateImage !== ""
-							? `${process.env.APP_URL}/storage/${body.alternateImage}`
+							? body.alternateImage
 							: "",
 					alt: body.alt,
 					categoryId: +body.categoryId,
@@ -112,7 +112,7 @@ export default async function cardRoutes(fastify) {
 				await pump(part.file, fs.createWriteStream(filePath));
 				body[
 					part.fieldname
-				] = `${process.env.APP_URL}/storage/${part.filename}`;
+				] = part.filename;
 			} else {
 				body[part.fieldname] = part.value;
 			}

@@ -7,10 +7,11 @@ export default async function categoryRoutes(fastify) {
 	});
 
 	fastify.post("/", categorySchema, async (request, reply) => {
-		const { title } = request.body;
+		const { title, instruction } = request.body;
 		const newCategory = await prisma.category.create({
 			data: {
 				title,
+				instruction
 			},
 		});
 		return reply.send(newCategory);
@@ -28,13 +29,14 @@ export default async function categoryRoutes(fastify) {
 
 	fastify.patch("/:id", categorySchema, async (request, reply) => {
 		const { id } = request.params;
-		const { title } = request.body;
+		const { title, instruction } = request.body;
 		await prisma.category.update({
 			where: {
 				id: +id,
 			},
 			data: {
 				title,
+				instruction
 			},
 		});
 		return reply.send({ success: true, message: "Игра обновлена" });
