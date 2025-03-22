@@ -31,7 +31,7 @@ try {
 	});
 	fastify.register(categoryRoutes, { prefix: "/categories" });
 	fastify.register(cardRoutes, { prefix: "/cards" });
-	await fastify.listen({ port: 3000 });
+	await fastify.listen({ port: 3000, host: "192.168.100.35" });
 } catch (err) {
 	fastify.log.error(err);
 	process.exit(1);

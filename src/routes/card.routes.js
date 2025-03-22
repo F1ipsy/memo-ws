@@ -1,6 +1,7 @@
 import { prisma } from "../main.js";
 import { pump } from "../main.js";
 import fs from "fs";
+import crypto from "node:crypto";
 
 export default async function cardRoutes(fastify) {
 	fastify.get("/", async (request, reply) => {
@@ -37,9 +38,10 @@ export default async function cardRoutes(fastify) {
 			// Получаем файл
 			if (part.file) {
 				// Сохраняем файл на сервере
-				const filePath = `./storage/${part.filename}`;
+				const uniqueName = `${crypto.randomUUID()}-${part.filename}`
+				const filePath = `./storage/${uniqueName}`;
 				await pump(part.file, fs.createWriteStream(filePath));
-				body[part.fieldname] = part.filename;
+				body[part.fieldname] = uniqueName;
 			} else {
 				body[part.fieldname] = part.value;
 			}
@@ -108,11 +110,10 @@ export default async function cardRoutes(fastify) {
 			// Получаем файл
 			if (part.file) {
 				// Сохраняем файл на сервере
-				const filePath = `./storage/${part.filename}`;
+				const uniqueName = `${crypto.randomUUID()}-${part.filename}`
+				const filePath = `./storage/${uniqueName}`;
 				await pump(part.file, fs.createWriteStream(filePath));
-				body[
-					part.fieldname
-				] = part.filename;
+				body[part.fieldname] = uniqueName;
 			} else {
 				body[part.fieldname] = part.value;
 			}
