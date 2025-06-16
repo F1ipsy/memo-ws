@@ -1,4 +1,4 @@
-import { prisma } from "../main.js";
+import { prisma } from "../../index.js";
 import { categorySchema } from "../schemas/category.schema.js";
 
 export default async function categoryRoutes(fastify) {

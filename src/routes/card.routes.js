@@ -1,5 +1,5 @@
-import { prisma } from "../main.js";
-import { pump } from "../main.js";
+import { prisma } from "../../index.js";
+import { pump } from "../../index.js";
 import fs from "fs";
 import crypto from "node:crypto";
 
